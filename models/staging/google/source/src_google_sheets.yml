@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+
+  - name: google_sheets # name of the source 
+    schema: google_sheets # this is the schema our raw data lives in
+    database: DEV_BRONZE_DB_ALUMNO26 # this is the name of our database
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      #warn_after: {count: 24, period: hour}
+      #error_after: {count: 48, period: hour}
+
+    tables:
+
+      - name: budgets
+        loaded_at_field: _fivetran_synced
+        columns:
+          - name: _row
+            tests:
+              - unique
+              - not_null
+          - name: product_id
+            tests:
+              - unique
+              #- relationships:
+              #    to: source('sql_server_db','products')
+              #    field: id
+          - name: quantity
+            #tests:
+            #  - positive_values
+          - name: month
+            tests:
+              - accepted_values: 
+                  values: ['january', 'february'] #Ejemplo, no es válido.
+          - name: _fivetran_synced
