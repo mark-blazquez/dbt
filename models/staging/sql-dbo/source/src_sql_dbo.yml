@@ -1,0 +1,380 @@
+version: 2
+
+sources:
+  - name: sql_server_dbo
+    description: ""
+    database: dev_bronze_db_alumno26
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+
+
+
+
+
+
+
+      - name: addresses
+        description: ""
+        columns:
+          - name: address_id
+            tests:
+              - unique
+              - not_null
+            description: ""
+
+          - name: address
+            tests:
+              - not_null
+            description: ""
+
+          - name: zipcode
+            description: ""
+          - name: country
+            description: ""
+
+          - name: state
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+      - name: events
+        description: ""
+        columns:
+          - name: event_id
+            tests:
+              - unique
+              - not_null
+            description: " el identificador del evento "
+
+          - name: event_type
+            description: ""
+
+          - name: product_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
+            description: ""
+
+          - name: order_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','orders')
+                  field: order_id
+            description: ""
+
+          - name: session_id
+            description: "me imagino que hace referencia como a una especie de cookie identificativa de cliente"
+
+          - name: page_url
+            description: ""
+
+          - name: created_at
+            description: ""
+
+          - name: user_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+      - name: fivetran_audit
+        description: ""
+        columns:
+          - name: id
+            description: ""
+
+          - name: message
+            description: ""
+
+          - name: update_started
+            description: ""
+
+          - name: update_id
+            description: ""
+
+          - name: schema
+            description: ""
+
+          - name: table
+            description: ""
+
+          - name: start
+            description: ""
+
+          - name: done
+            description: ""
+
+          - name: rows_updated_or_inserted
+            description: ""
+
+          - name: status
+            description: ""
+
+          - name: progress
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+      - name: order_items
+        description: ""
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+            description: ""
+
+          - name: product_id
+            description: ""
+
+          - name: quantity
+          tests:
+              - positive_values
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: orders
+        description: ""
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','orders_id')
+                  field: order_id
+            description: ""
+
+          - name: address_id
+            tests:
+              - unique
+              - relationships:
+                to: source('sql_server_dbo','address_id')
+                field: addresses
+            description: ""
+
+          - name: user_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
+
+          - name: status
+            tests:
+              - accepted_values: 
+                  values: ['delivered', 'shipped','shipped','preparing']
+            description: ""
+
+          - name: order_total
+            description: ""
+
+          - name: order_cost
+            tests:
+              - positive_values
+            description: ""
+
+          - name: estimated_delivery_at
+            description: ""
+
+          - name: tracking_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','events')
+                  field: event_id
+            description: ""
+
+          - name: shipping_service
+            tests:
+              - accepted_values: 
+                  values: ['ups', 'fedex','usps','dhl',' '] #Ejemplo, no es válido.
+            description: ""
+
+          - name: promo_id
+            tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','promos')
+                  field: promo_id
+            description: ""
+
+          - name: shipping_cost
+            tests:
+              - positive_values
+            description: ""
+
+          - name: delivered_at
+            description: ""
+
+          - name: created_at
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+      - name: products
+        description: ""
+        columns:
+          - name: product_id
+            description: ""
+
+          - name: price
+            tests:
+              - positive_values
+            description: ""
+
+          - name: name
+            description: ""
+
+          - name: inventory
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: promos
+        description: ""
+        columns:
+          - name: promo_id
+            description: ""
+          - name: discount
+            description: ""
+          - name: status
+            description: ""
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: users
+        description: ""
+        columns:
+          - name: user_id
+            description: ""
+          - name: last_name
+            description: ""
+          - name: updated_at
+            description: ""
+          - name: phone_number
+            description: ""
+          - name: total_orders
+            description: ""
+          - name: first_name
+            description: ""
+          - name: created_at
+            description: ""
+          - name: address_id
+            description: ""
+          - name: email
+            description: ""
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
