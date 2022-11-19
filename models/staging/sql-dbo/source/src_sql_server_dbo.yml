@@ -1,0 +1,375 @@
+version: 2
+
+sources:
+  - name: sql_server_dbo
+    description: ""
+    database: dev_bronze_db_alumno26
+    tables:
+      - name: addresses
+        description: "tabla de direcciones de pedidos"
+        columns:
+
+          - name: address_id
+            tests:
+              - unique
+              - not_null
+            description: "identificador unico de la direccion cliente "
+
+          - name: address
+            tests:
+              - not_null
+            description: "calle y numero direccion "
+
+          - name: zipcode
+            description: "codigo postal "
+
+          - name: country
+            description: "pais"
+
+          - name: state
+            description: "estado"
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: events
+        description: " tabala de interaccion de usuarios con la pag web"
+        columns:
+          - name: event_id
+            tests:
+              - unique
+              - not_null
+            description: " el identificador del evento "
+
+          - name: event_type
+            test:
+              - accepted_values: 
+                  values: ['page_view', 'checkout','add_to_cart','package_shipped']
+            description: "tipo de interaccion en la pagina"
+
+          - name: product_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
+            description: "foranea a productos"
+
+          - name: order_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','orders')
+                  field: order_id
+            description: "lo realaciona con la  tabla de peidos cuando este es un checkout"
+
+          - name: session_id
+            description: "me imagino que hace referencia como a una especie de cookie identificativa de cliente?"
+
+          - name: page_url
+            description: "url de la pagina del producto"
+
+          - name: created_at
+            description: "fecha creacion "
+
+          - name: user_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
+            description: "foranea que relaciona con usuario"
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      - name: fivetran_audit
+        description: ""
+        columns:
+          - name: id
+            description: ""
+          - name: message
+            description: ""
+          - name: update_started
+            description: ""
+          - name: update_id
+            description: ""
+          - name: schema
+            description: ""
+          - name: table
+            description: ""
+          - name: start
+            description: ""
+          - name: done
+            description: ""
+          - name: rows_updated_or_inserted
+            description: ""
+          - name: status
+            description: ""
+          - name: progress
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+      - name: order_items
+        description: ""
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+            description: "id de pedido"
+
+          - name: product_id
+            test:
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
+            description: "foranea que relaciona con los productos "
+
+          - name: quantity
+            tests:
+              - positive_values
+            description: ""
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+
+
+
+
+      - name: orders
+        description: "pedidos efectuados "
+        columns:
+
+          - name: order_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','order_items')
+                  field: order_id
+            description: "clave foranea tabla orders"
+
+          - name: address_id
+            description: "clave foranea tabla addresses me da fallo al relacionarla"
+          - name: user_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
+            description: "clave foranea tabla users"
+
+          - name: status
+            tests:
+              - accepted_values: 
+                  values: ['delivered', 'shipped','shipped','preparing']
+            description: "estado del pedido"
+
+          - name: order_total
+            tests:
+              - positive_values
+            description: "precio de la suma de los productos comprados"
+
+          - name: order_cost
+            tests:
+              - positive_values
+            description: "precio total incluido envio"
+
+          - name: estimated_delivery_at
+            description: "fecha de entrega "
+
+          - name: tracking_id
+            tests:
+              #- relationships:
+              #    to: source('sql_server_dbo','events')
+              #    field: event_id
+            description: "id de envio"
+
+          - name: shipping_service
+            tests:
+              - accepted_values: 
+                  values: ['ups', 'fedex','usps','dhl',' ']
+            description: "compañia de envio"
+
+          - name: promo_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','promos')
+                  field: promo_id
+            description: "foranea de promos"
+
+          - name: shipping_cost
+            tests:
+              - positive_values
+            description: "costos de envio"
+
+          - name: delivered_at
+            description: "campo vacio lo borrare del modelo"
+
+          - name: created_at
+            description: "fecha de creacion del pedido"
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+          
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+      - name: products
+        description: "tabla con los productos"
+        columns:
+
+          - name: product_id
+            test:
+              - unique
+              - not null
+            description: "id unico reconoce el producto"
+            
+          - name: price
+            tests:
+              - positive_values
+            description: " precio"
+
+          - name: name
+            description: "nombre producto"
+
+          - name: inventory
+            description: "cantidad de producto en existencia"
+
+          - name: _fivetran_deleted
+            description: ""
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+      - name: promos
+        description: "promociones descuentos"
+        columns:
+
+          - name: promo_id
+            test:
+              - unique
+              - not null
+            description: "id promocion"
+
+          - name: discount
+            description: "descuento "
+
+          - name: status
+            description: "estado de la promocion "
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
+
+
+
+
+
+
+      - name: users
+        description: "datos usuarios"
+        columns:
+
+          - name: user_id
+            test:
+              - unique
+              - not null
+            description: "id usuario"
+
+          - name: last_name
+            description: "apellido"
+
+          - name: updated_at
+            description: "actualizacion datos usuario?"
+
+          - name: phone_number
+            description: "numero telefono"
+
+          - name: total_orders
+            description: "campo vacio borrar en modelo"
+
+          - name: first_name
+            description: "nombre"
+
+          - name: created_at
+            description: "fecha creacion usuario"
+
+          - name: address_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','addresses')
+                  field: address_id
+            description: "id direccion "
+
+          - name: email
+            description: "email usuario"
+
+          - name: _fivetran_deleted
+            description: ""
+
+          - name: _fivetran_synced
+            description: ""
