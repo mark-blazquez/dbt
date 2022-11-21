@@ -4,20 +4,22 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_addresses AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'addresses') }}
+    FROM {{ source('sql_server_dbo','addresses') }}
     ),
 
-events AS (
+addresses AS (
     SELECT
-      ADDRESS ,
+      ADDRESS_ID,
+      ADDRESS as number_address_street_name,
       ZIPCODE ,
       COUNTRY ,
       STATE ,
       _FIVETRAN_DELETED,
       _FIVETRAN_SYNCED
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_addresses
+    where ZIPCODE <100000 and ZIPCODE> 9999
     )
 
-SELECT * FROM 
+SELECT * FROM addresses

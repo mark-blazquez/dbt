@@ -4,7 +4,7 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_products AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'products') }}
     ),
@@ -17,7 +17,7 @@ events AS (
         INVENTORY ,
         _FIVETRAN_DELETED ,
         _FIVETRAN_SYNCED 
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_products
     )
 
 SELECT * FROM 

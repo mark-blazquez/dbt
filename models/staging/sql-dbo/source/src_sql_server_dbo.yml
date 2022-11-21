@@ -4,7 +4,14 @@ sources:
   - name: sql_server_dbo
     description: ""
     database: dev_bronze_db_alumno26
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
     tables:
+
       - name: addresses
         description: "tabla de direcciones de pedidos"
         columns:

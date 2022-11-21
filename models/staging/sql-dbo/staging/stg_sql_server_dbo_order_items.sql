@@ -4,7 +4,7 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_order_item AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'order_items') }}
     ),
@@ -16,7 +16,7 @@ events AS (
         QUANTITY ,
         _FIVETRAN_DELETED ,
         _FIVETRAN_SYNCED 
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_order_item
     )
 
 SELECT * FROM 

@@ -4,7 +4,7 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_events AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'events') }}
     ),
@@ -20,7 +20,7 @@ events AS (
         USER_ID ,
         _FIVETRAN_DELETED ,
         _FIVETRAN_SYNCED ,
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_events
     )
 
 SELECT * FROM 

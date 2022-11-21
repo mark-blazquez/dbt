@@ -4,19 +4,22 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_promos AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'promos') }}
     ),
 
-events AS (
+promos AS (
     SELECT
       PROMO_ID ,
-      DISCOUNT ,
-      STATUS ),
+      DISCOUNT as discount_percent ,
+      case 
+        when STATUS='active' then true
+        else false
+      end ,
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED 
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_promos
     )
 
-SELECT * FROM 
+SELECT * FROM promos

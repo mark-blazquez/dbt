@@ -4,25 +4,24 @@
   )
 }}
 
-WITH src_sql_server_dbo AS (
+WITH stg_sql_server_dbo_users AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'users') }}
     ),
 
-events AS (
+users AS (
     SELECT
-      USER_ID  NOT NULL,
+      USER_ID ,
       LAST_NAME ,
-      UPDATED_AT ,
-      PHONE_NUMBER ,
-      TOTAL_ORDERS ,
+      UPDATED_AT as UPDATED_AT_utc ,
+      PHONE_NUMBER /*TRANSICION */ ,
       FIRST_NAME ,
       CREATED_AT ,
       ADDRESS_ID ,
       EMAIL ,
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED  
-    FROM sql_server_dbo
+    FROM stg_sql_server_dbo_users
     )
 
-SELECT * FROM 
+SELECT * FROM users
