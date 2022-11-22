@@ -3,7 +3,11 @@ version: 2
 sources:
   - name: google_sheets
     description: ""
-    database: dev_bronze_db_alumno26
+    database: |
+      {%- if  target.name == 'user_dev' -%} dev_bronze_db_alumno26
+      {%- elif target.name == 'ci' -%} dev_bronze_db_alumnoa26
+      {%- elif target.name == 'pro'-%} pro_bronze_db_alumno26
+      {%- endif -%}
 
     quoting:
       database: false

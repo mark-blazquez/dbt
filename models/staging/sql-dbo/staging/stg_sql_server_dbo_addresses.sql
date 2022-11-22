@@ -16,10 +16,10 @@ addresses AS (
       ZIPCODE ,
       COUNTRY ,
       STATE ,
-      _FIVETRAN_DELETED,
+      _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED
     FROM stg_sql_server_dbo_addresses
-    where ZIPCODE <100000 and ZIPCODE> 9999
+    where ZIPCODE <100000 and ZIPCODE <= 10000
     )
 
 SELECT * FROM addresses

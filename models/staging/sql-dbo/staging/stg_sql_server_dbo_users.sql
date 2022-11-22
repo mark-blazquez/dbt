@@ -14,11 +14,11 @@ users AS (
       USER_ID ,
       LAST_NAME ,
       UPDATED_AT as UPDATED_AT_utc ,
-      PHONE_NUMBER /*TRANSICION */ ,
+      PHONE_NUMBER /*TRANSFORMAR */ ,
       FIRST_NAME ,
       CREATED_AT ,
       ADDRESS_ID ,
-      EMAIL ,
+      EMAIL/*HACERLO COMO TEST*/ ,
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED  
     FROM stg_sql_server_dbo_users
