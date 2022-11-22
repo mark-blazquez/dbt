@@ -1,0 +1,71 @@
+version: 2
+
+sources:
+  - name: google_sheets
+    description: ""
+    database: |
+      {%- if  target.name == 'user_dev' -%} dev_bronze_db_alumno26
+      {%- elif target.name == 'ci' -%} dev_bronze_db_alumnoa26
+      {%- elif target.name == 'pro'-%} pro_bronze_db_alumno26
+      {%- endif -%}
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+    
+    freshness:
+      #warn_after: {count: 24, period: hour}
+      #error_after: {count: 48, period: hour}
+
+    tables:
+      - name: budgets
+        description: "tabla presupuestos"
+        columns:
+          - name: _row
+            test:
+              - unique
+              - not null
+            description: "numero orden"
+          - name: quantity
+            test:
+              -not null
+            description: "cantidad producto"
+          - name: month
+            description: "mes"
+          - name: product_id
+            test:
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
+            description: "foranea para tabla productos"
+          - name: _fivetran_synced
+            description: ""
+
+      - name: fivetran_audit
+        description: ""
+        columns:
+          - name: id
+            description: ""
+          - name: message
+            description: ""
+          - name: update_started
+            description: ""
+          - name: update_id
+            description: ""
+          - name: schema
+            description: ""
+          - name: table
+            description: ""
+          - name: start
+            description: ""
+          - name: done
+            description: ""
+          - name: rows_updated_or_inserted
+            description: ""
+          - name: status
+            description: ""
+          - name: progress
+            description: ""
+          - name: _fivetran_synced
+            description: ""
