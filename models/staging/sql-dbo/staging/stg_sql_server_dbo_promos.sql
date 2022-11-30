@@ -12,11 +12,11 @@ WITH stg_sql_server_dbo_promos AS (
 promos AS (
     SELECT
       PROMO_ID ,
-      DISCOUNT as discount_percent ,
+      DISCOUNT as discount_$ ,
       case 
         when STATUS='active' then true
         else false
-      end ,
+      end as status ,
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED 
     FROM stg_sql_server_dbo_promos

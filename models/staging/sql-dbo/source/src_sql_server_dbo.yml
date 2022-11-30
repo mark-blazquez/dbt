@@ -32,6 +32,8 @@ sources:
             description: "calle y numero direccion "
 
           - name: zipcode
+            tests:
+              - codigo_postal
             description: "codigo postal "
 
           - name: country

@@ -5,7 +5,7 @@
   )
 }}
 
-WITH src_google_sheets AS (
+WITH stg_google_sheets AS (
     SELECT * 
     FROM {{ source('google_sheets', 'budgets') }}
     ),
