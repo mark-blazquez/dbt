@@ -34,12 +34,17 @@ sources:
           - name: zipcode
             tests:
               - codigo_postal
+              - not null
             description: "codigo postal "
 
           - name: country
+            tests:
+              - not null
             description: "pais"
 
           - name: state
+            tests:
+              - not null
             description: "estado"
 
           - name: _fivetran_deleted
@@ -209,7 +214,13 @@ sources:
             description: "clave foranea tabla orders"
 
           - name: address_id
-            description: "clave foranea tabla addresses me da fallo al relacionarla"
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','addresses')
+                  field: address_id
+            description: "clave foranea tabla addresses "
+
+            
           - name: user_id
             tests:
               - relationships:
@@ -226,27 +237,27 @@ sources:
           - name: order_total
             tests:
               - positive_values
+              - not null
             description: "precio de la suma de los productos comprados"
 
           - name: order_cost
             tests:
               - positive_values
+              - not null
             description: "precio total incluido envio"
 
           - name: estimated_delivery_at
+            tests:
+              - fechaenvio_fechaorden
             description: "fecha de entrega "
 
           - name: tracking_id
-            tests:
-              #- relationships:
-              #    to: source('sql_server_dbo','events')
-              #    field: event_id
-            description: "id de envio"
+            description: "id de enlocalizacion pedido"
 
           - name: shipping_service
             tests:
               - accepted_values: 
-                  values: ['ups', 'fedex','usps','dhl',' ']
+                  values: ['ups', 'fedex','usps','dhl','']
             description: "compañia de envio"
 
           - name: promo_id
@@ -259,12 +270,15 @@ sources:
           - name: shipping_cost
             tests:
               - positive_values
+              - not null
             description: "costos de envio"
 
           - name: delivered_at
-            description: "campo vacio lo borrare del modelo"
+            description: "fecha de envio para los paquetes enviados"
 
           - name: created_at
+            tests:
+              - not null 
             description: "fecha de creacion del pedido"
 
           - name: _fivetran_deleted
@@ -273,7 +287,6 @@ sources:
           - name: _fivetran_synced
             description: ""
           
-
 
  
 
@@ -292,7 +305,7 @@ sources:
         columns:
 
           - name: product_id
-            test:
+            tests:
               - unique
               - not null
             description: "id unico reconoce el producto"
@@ -321,15 +334,20 @@ sources:
         columns:
 
           - name: promo_id
-            test:
+            tests:
               - unique
               - not null
             description: "id promocion"
 
           - name: discount
+            tests:
+              - positive values
             description: "descuento "
 
           - name: status
+            tests:
+              - accepted_values: 
+                  values: ['active','inactive']
             description: "estado de la promocion "
 
           - name: _fivetran_deleted
@@ -343,12 +361,14 @@ sources:
 
 
 
+
+
       - name: users
         description: "datos usuarios"
         columns:
 
           - name: user_id
-            test:
+            tests:
               - unique
               - not null
             description: "id usuario"
@@ -379,6 +399,8 @@ sources:
             description: "id direccion "
 
           - name: email
+            tests:
+              - email
             description: "email usuario"
 
           - name: _fivetran_deleted

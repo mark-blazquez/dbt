@@ -1,9 +1,9 @@
-{% test codigo_postal(model, column_name) %}
+{% test email(model, column_name) %}
 
 
    select *
    from {{ model }}
-   where {{ column_name }} 
+   where  rlike({{ column_name }},'\\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}')= true
 
 
 {% endtest %}

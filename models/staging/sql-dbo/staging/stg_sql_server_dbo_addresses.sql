@@ -13,8 +13,8 @@ WITH stg_sql_server_dbo_addresses AS (
 addresses AS (
     SELECT
       ADDRESS_ID,
-      cast (substr(address,charindex(' ', address, 1))as varchar(256)) as address_name ,
       cast (left (address,charindex(' ', address, 1))as numeric ) as address_number,
+      cast (substr(address,charindex(' ', address, 1))as varchar(256)) as address_name ,
       ZIPCODE ,
       COUNTRY ,
       STATE ,
