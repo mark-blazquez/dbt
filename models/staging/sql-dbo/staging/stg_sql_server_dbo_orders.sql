@@ -24,7 +24,7 @@ orders AS (
       date(DELIVERED_AT) as DELIVERED_AT_utc ,
 
       /*case 
-          when status='preparing' then TRACKING_ID=null
+          when status='preparing' then TRACKING_ID=FALSE
           ELSE
           TRACKING_ID
       END AS TRACKING_ID ,*/

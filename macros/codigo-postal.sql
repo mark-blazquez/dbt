@@ -3,7 +3,7 @@
 
    select *
    from {{ model }}
-   where {{ column_name }} !=11111 and {{ column_name }} between 00501 and 99950
+   where {{ column_name }} =11111 and {{ column_name }} not between 00501 and 99950
 
 
 {% endtest %}

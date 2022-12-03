@@ -21,6 +21,7 @@ addresses AS (
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED
     FROM stg_sql_server_dbo_addresses
+    --where STATE!='district of columbia'---hay una direccion donde en estado pone distrito de columbia y eso NO ES UN ESTADO asi que habria que dar reporte para cambiar esto
     )
 
 

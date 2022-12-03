@@ -3,7 +3,7 @@
 
    select *
    from {{ model }}
-   where  rlike({{ column_name }},'\\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}')= true
+   where  rlike({{ column_name }},'\\w+@[a-zA-Z0-9_.-]+?\.[a-zA-Z]{2,4}')= false
 
 
 {% endtest %}
