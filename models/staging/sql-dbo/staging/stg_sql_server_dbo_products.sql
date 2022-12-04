@@ -1,18 +1,14 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 
 WITH stg_sql_server_dbo_products AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'products') }}
     ),
 
-events AS (
+products AS (
     SELECT
         PRODUCT_ID ,
-        PRICE ,
+        PRICE  ,
         NAME ,
         INVENTORY ,
         _FIVETRAN_DELETED ,
@@ -20,4 +16,4 @@ events AS (
     FROM stg_sql_server_dbo_products
     )
 
-SELECT * FROM 
+SELECT * FROM products

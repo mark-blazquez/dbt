@@ -1,8 +1,3 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
 
 WITH stg_sql_server_dbo_users AS (
     SELECT * 
@@ -12,13 +7,13 @@ WITH stg_sql_server_dbo_users AS (
 users AS (
     SELECT
       USER_ID ,
-      LAST_NAME ,
-      UPDATED_AT as UPDATED_AT_utc ,
-      PHONE_NUMBER /*TRANSFORMAR */ ,
       FIRST_NAME ,
-      CREATED_AT ,
+      LAST_NAME ,
+      cast(replace(PHONE_NUMBER,'-','')as numeric) as PHONE_NUMBER,
+      cast (date(CREATED_AT)as date) as CREATED_AT_utc ,
+      cast(date(UPDATED_AT)as date) as UPDATED_AT_utc ,
       ADDRESS_ID ,
-      EMAIL/*HACERLO COMO TEST*/ ,
+      EMAIL ,
       _FIVETRAN_DELETED ,
       _FIVETRAN_SYNCED  
     FROM stg_sql_server_dbo_users
