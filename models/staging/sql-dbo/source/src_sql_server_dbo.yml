@@ -269,21 +269,20 @@ sources:
         columns:
           - name: order_id
             tests:
-              - unique
               - not_null
-            description: "id de pedido"
+            description: "id de pedido foranea con orders esto es primaria junto product_id"
 
           - name: product_id
             test:
               - relationships:
                   to: source('sql_server_dbo','products')
                   field: product_id
-            description: "foranea que relaciona con los productos "
+            description: "primaria a la vez que foranea que relaciona con los productos "
 
           - name: quantity
             tests:
               - positive_values
-            description: ""
+            description: "la cantidad de producto vendida en un pedido concreto"
 
           - name: _fivetran_deleted
             description: ""
@@ -319,78 +318,6 @@ sources:
             description: ""
           - name: _fivetran_synced
             description: ""
-
-
-
-
-
-
-
-
-
-      - name: events
-        description: " tabala de interaccion de usuarios con la pag web"
-        columns:
-          - name: event_id
-            tests:
-              - unique
-              - not_null
-            description: " el identificador del evento "
-
-          - name: event_type
-            test:
-              - accepted_values: 
-                  values: ['page_view', 'checkout','add_to_cart','package_shipped']
-            description: "tipo de interaccion en la pagina"
-
-          - name: product_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','products')
-                  field: product_id
-            description: "foranea a productos"
-
-          - name: order_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','orders')
-                  field: order_id
-            description: "lo realaciona con la  tabla de peidos cuando este es un checkout"
-
-          - name: session_id
-            description: "me imagino que hace referencia como a una especie de cookie identificativa de cliente?"
-
-          - name: page_url
-            description: "url de la pagina del producto"
-
-          - name: created_at
-            description: "fecha creacion "
-
-          - name: user_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','users')
-                  field: user_id
-            description: "foranea que relaciona con usuario"
-
-          - name: _fivetran_deleted
-            description: ""
-
-          - name: _fivetran_synced
-            description: ""
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       - name: fivetran_audit

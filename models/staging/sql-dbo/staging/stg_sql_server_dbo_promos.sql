@@ -1,8 +1,4 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 
 WITH stg_sql_server_dbo_promos AS (
     SELECT * 

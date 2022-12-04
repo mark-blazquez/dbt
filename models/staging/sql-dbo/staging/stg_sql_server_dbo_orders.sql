@@ -1,8 +1,4 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
 
 WITH stg_sql_server_dbo_orders AS (
     SELECT * 
@@ -24,9 +20,8 @@ orders AS (
       date(DELIVERED_AT) as DELIVERED_AT_utc ,
 
       /*case 
-          when status='preparing' then TRACKING_ID=FALSE
-          ELSE
-          TRACKING_ID
+          when status='preparing' then TRACKING_ID=null
+          ELSE TRACKING_ID
       END AS TRACKING_ID ,*/
 
       case 

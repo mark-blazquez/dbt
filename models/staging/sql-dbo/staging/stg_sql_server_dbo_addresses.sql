@@ -1,8 +1,3 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
 
 WITH stg_sql_server_dbo_addresses AS (
     SELECT * 
