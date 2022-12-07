@@ -9,9 +9,7 @@ int_budgets AS (
         id_budget as nk_id_budget,
         md5(product_id) as product_id,
         quantity,
-        /*concat(month(order_date),'-',year(order_date)) as*/ order_date,
-        date_load
-
+        /*concat(month(order_date),'-',year(order_date)) as*/ order_date
     FROM stg_google_sheets 
 
     )
