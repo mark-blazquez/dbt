@@ -19,7 +19,6 @@ int_orders AS (
         SHIPPING_COST_$,
         md5(PRODUCT_ID) as PRODUCT_ID,
         QUANTITY as quantity_product_in_order,
-        year(CREATED_AT_UTC)*10000+month(CREATED_AT_UTC)*100+day(CREATED_AT_UTC) as id_date,
         CREATED_AT_UTC,
         ESTIMATED_DELIVERY_AT_UTC,
         DELIVERED_AT_UTC,
