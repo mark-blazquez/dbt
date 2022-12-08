@@ -2,7 +2,7 @@
 
 WITH stg_sql_server_dbo_orders AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'orders') }}
+    FROM {{ ref('orders_snapshot') }}
     ),
 
 orders AS (
@@ -39,7 +39,10 @@ orders AS (
       END AS PROMO_ID ,
       
       _FIVETRAN_DELETED ,
-      _FIVETRAN_SYNCED 
+      _FIVETRAN_SYNCED ,
+      date(DBT_VALID_TO) as dato_no_valido_desde
+
+
     FROM stg_sql_server_dbo_orders
     )
 

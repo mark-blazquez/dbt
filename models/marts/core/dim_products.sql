@@ -9,7 +9,8 @@ dim_products AS (
         PRODUCT_ID as nk_product_id,
         PRICE,
         NAME,
-        INVENTORY
+        INVENTORY,
+        dato_no_valido_desde
     FROM stg_sql_server_dbo_products
     )
 

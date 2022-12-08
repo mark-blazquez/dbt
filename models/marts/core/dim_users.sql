@@ -19,7 +19,8 @@ fact_users AS (
         ZIPCODE,
         COUNTRY,
         STATE,
-        dato_no_valido_desde
+        dato_usuario_no_valido_desde,
+        dato_calle_no_valido_desde
 
     FROM int_users 
 
