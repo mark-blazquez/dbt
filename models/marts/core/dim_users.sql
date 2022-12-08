@@ -1,21 +1,28 @@
-WITH stg_sql_server_dbo_users AS (
+WITH int_users AS (
     SELECT * 
-    FROM {{ ref('stg_sql_server_dbo_users') }}
+    FROM {{ ref('int_users') }}
     ),
 
-dim_users AS (
+fact_users AS (
     SELECT
-        (USER_ID) as user_id,
-        user_id as nk_user_id
-        , first_name
-        , last_name
-        , email
-        , phone_number
-        , created_at_utc
-        , updated_at_utc
-        , address_id
-        , date_load
-    FROM stg_sql_server_dbo_users
+    
+        user_id,
+        nk_user_id,
+        FIRST_NAME,
+        LAST_NAME,
+        PHONE_NUMBER,
+        CREATED_AT_UTC,
+        UPDATED_AT_UTC,
+        EMAIL,
+        address_number,
+        address_name ,
+        ZIPCODE,
+        COUNTRY,
+        STATE,
+        dato_no_valido_desde
+
+    FROM int_users 
+
     )
 
-SELECT * FROM dim_users
+SELECT * FROM fact_users

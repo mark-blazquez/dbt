@@ -1,7 +1,7 @@
 
 WITH stg_sql_server_dbo_addresses AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo','addresses') }}
+    FROM {{ ref('addresses_snapshot') }}
     ),
 
 
@@ -14,7 +14,8 @@ addresses AS (
       COUNTRY ,
       STATE ,
       _FIVETRAN_DELETED ,
-      _FIVETRAN_SYNCED
+      _FIVETRAN_SYNCED,
+      DBT_VALID_TO
     FROM stg_sql_server_dbo_addresses
     --where STATE!='district of columbia'---hay una direccion donde en estado pone distrito de columbia y eso NO ES UN ESTADO asi que habria que dar reporte para cambiar esto
     )

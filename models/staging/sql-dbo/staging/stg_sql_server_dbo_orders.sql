@@ -7,7 +7,8 @@ WITH stg_sql_server_dbo_orders AS (
 
 orders AS (
     SELECT
-      ORDER_ID
+
+      ORDER_ID,
       ADDRESS_ID ,
       USER_ID ,
       STATUS ,
@@ -23,7 +24,8 @@ orders AS (
           when status='preparing' then TRACKING_ID=null
           ELSE TRACKING_ID
       END AS TRACKING_ID ,*/
-
+      TRACKING_ID ,
+      
       case 
           when SHIPPING_SERVICE!='ups' and SHIPPING_SERVICE!='usps' and SHIPPING_SERVICE!='fedex'  and SHIPPING_SERVICE!='dhl' then null
           ELSE
