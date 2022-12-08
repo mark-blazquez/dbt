@@ -1,7 +1,7 @@
 
 WITH stg_sql_server_dbo_users AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'users') }}
+    FROM {{ ref('users_snapshot') }}
     ),
 
 users AS (
@@ -15,7 +15,10 @@ users AS (
       ADDRESS_ID ,
       EMAIL ,
       _FIVETRAN_DELETED ,
-      _FIVETRAN_SYNCED  
+      _FIVETRAN_SYNCED,
+      date(DBT_VALID_TO) as dato_no_valido_desde
+
+
     FROM stg_sql_server_dbo_users
     )
 

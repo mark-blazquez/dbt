@@ -24,7 +24,8 @@ int_users AS (
         ZIPCODE,
         COUNTRY,
         STATE,
-        date(DBT_VALID_TO) as dato_no_valido_desde
+        stg_sql_server_dbo_users.dato_no_valido_desde as dato_usuario_no_valido_desde ,
+        stg_sql_server_dbo_addresses.dato_no_valido_desde as dato_calle_no_valido_desde 
 
     from stg_sql_server_dbo_users join stg_sql_server_dbo_addresses 
     on stg_sql_server_dbo_users.address_id=stg_sql_server_dbo_addresses.address_id

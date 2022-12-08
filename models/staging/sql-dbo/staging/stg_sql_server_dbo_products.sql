@@ -2,7 +2,7 @@
 
 WITH stg_sql_server_dbo_products AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'products') }}
+    FROM {{ ref('products_snapshot') }}
     ),
 
 products AS (
@@ -12,7 +12,10 @@ products AS (
         NAME ,
         INVENTORY ,
         _FIVETRAN_DELETED ,
-        _FIVETRAN_SYNCED 
+        _FIVETRAN_SYNCED ,
+        date(DBT_VALID_TO) as dato_no_valido_desde
+
+
     FROM stg_sql_server_dbo_products
     )
 

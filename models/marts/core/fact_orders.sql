@@ -19,7 +19,9 @@ fact_orders AS (
         ESTIMATED_DELIVERY_AT_UTC,
         DELIVERED_AT_UTC,
         SHIPPING_SERVICE,
-        promo_id
+        promo_id,
+        dato_no_valido_desde
+
 
     FROM int_orders 
 

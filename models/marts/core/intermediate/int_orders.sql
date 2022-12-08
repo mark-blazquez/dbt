@@ -23,7 +23,9 @@ int_orders AS (
         ESTIMATED_DELIVERY_AT_UTC,
         DELIVERED_AT_UTC,
         SHIPPING_SERVICE,
-        md5(PROMO_ID) as promo_id
+        md5(PROMO_ID) as promo_id,
+        dato_no_valido_desde
+
     FROM stg_sql_server_dbo_orders join stg_sql_server_dbo_order_items 
     on stg_sql_server_dbo_orders.order_id=stg_sql_server_dbo_order_items.order_id
     --order by stg_sql_server_dbo_orders.order_id
