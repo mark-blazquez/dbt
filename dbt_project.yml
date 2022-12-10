@@ -49,12 +49,12 @@ models:
         +schema: sql_server_dbo
       
     marts:
-      +materialized: table
+      +materialized: incremental
       +database: |  
         {%- if  target.name == 'user_dev' -%} dev_gold_db_alumno26  
         {%- elif target.name == 'ci' -%} dev_gold_db_alumno26 
         {%- elif target.name == 'pro'-%} pro_gold_db_alumno26
-        {%- else -%} {{target.database}}_silver_db_alumno_26 
+        {%- else -%} {{target.database}}_gold_db_alumno_26 
         {%- endif -%}
       core:
         +schema: core

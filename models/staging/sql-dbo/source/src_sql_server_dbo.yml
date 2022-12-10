@@ -46,7 +46,7 @@ sources:
             tests:
               - not_null
               - accepted_values: 
-                  values: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
+                  values: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','District of Columbia','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
             description: "estado"
 
           - name: _fivetran_deleted
@@ -126,10 +126,10 @@ sources:
             description: "compañia de envio"
 
           - name: promo_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','promos')
-                  field: promo_id
+            #tests:
+            #  - relationships:
+            #      to: source('sql_server_dbo','promos')
+            #      field: promo_id
             description: "foranea de promos"
 
           - name: shipping_cost
@@ -338,16 +338,16 @@ sources:
                   values: ['page_view', 'checkout','add_to_cart','package_shipped']
             description: "tipo de interaccion en la pagina"
           - name: product_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','products')
-                  field: product_id
+            #tests:
+            #  - relationships:
+            #      to: source('sql_server_dbo','products')
+            #      field: product_id
             description: "foranea a productos"
           - name: order_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','orders')
-                  field: order_id
+            #tests:
+            #  - relationships:
+            #      to: source('sql_server_dbo','orders')
+            #      field: order_id
             description: "lo realaciona con la  tabla de pedidos cuando este es un checkout"
           - name: session_id
             description: "me imagino que hace referencia como a una especie de cookie identificativa de cliente?"

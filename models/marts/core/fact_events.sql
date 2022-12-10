@@ -14,7 +14,7 @@ fact_events AS (
         PAGE_URL ,
         year(CREATED_AT_UTC)*10000+month(CREATED_AT_UTC)*100+day(CREATED_AT_UTC) as id_date,
         CREATED_AT_utc,
-        md5(USER_ID) as USER_ID
+        USER_ID
         
     FROM int_events 
 
