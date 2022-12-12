@@ -54,7 +54,7 @@ models:
       - name: order_id
         tests:
           - not_null
-          - unique
+          #- unique
         description: "id md5 de orders nuevo "
 
       - name: nk_order_id
@@ -115,7 +115,6 @@ models:
       - name: user_id
         tests:
           - not_null
-          - unique
         description: "id md5 de usuario"
 
       - name: nk_user_id
