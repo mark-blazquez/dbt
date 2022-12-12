@@ -9,7 +9,7 @@ models:
 
       - name: address_number
         tests:
-          - not_null
+          #- not_null
         description: "seperada la direccion este campo es solo es el numero de la vivienda "
 
       - name: address_name
