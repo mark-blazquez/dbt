@@ -1,0 +1,354 @@
+version: 2
+
+models:
+  - name: dim_orders
+    description: "dimension de pedidos creada para satisfacer a tabla de hechos events, contendra los mismos datos que la tabla de hacho a excepcion de el id fecha"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+        description: "clave primaria  "
+
+      - name: nk_order_id
+        description: "clave natural "
+
+      - name: user_id
+        description: " union con usuario"
+
+      - name: status
+        description: "estado pedido"
+
+      - name: order_total_cost_$
+        description: "precio total "
+
+      - name: order_cost_without_shipping_$
+        description: "precio sin envio"
+
+      - name: shipping_cost_$
+        description: "coste envio"
+
+      - name: product_id
+        description: "id producto "
+
+      - name: quantity_product_in_order
+        description: "cantidad producto por pedido"
+
+      - name: created_at_utc
+        description: "fecha de creacion pedido "
+
+      - name: estimated_delivery_at_utc
+        description: "fecha estimada de envio"
+
+      - name: delivered_at_utc
+        description: "fecha de envio"
+
+      - name: shipping_service
+        description: "servicio de mensajeria"
+
+      - name: promo_id
+        description: "id descuento"
+
+      - name: dato_no_valido_desde
+        description: "control snapshot"
+
+
+
+
+
+
+
+
+
+
+
+  - name: dim_products
+    description: "dimensio de productos "
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+        description: "id producto "
+
+      - name: nk_product_id
+        description: "id natural de productos "
+
+      - name: price
+        description: "precio producto"
+
+      - name: name
+        description: "nombre "
+
+      - name: inventory
+        description: "cantidad"
+
+      - name: dato_no_valido_desde
+        description: "control de snapshot"
+
+
+
+
+
+
+
+
+
+
+
+
+
+  - name: dim_promos
+    description: "dimension de las promos "
+    columns:
+      - name: promo_id
+        tests:
+          - not_null
+          - unique
+        description: "id promo"
+
+      - name: nk_promo_id
+        description: "antiguo id promo el natural "
+
+      - name: discount_$
+        description: "descuento que aplica a la compra en dolares"
+
+      - name: status
+        description: "estado de la promocion "
+
+
+
+
+  - name: dim_fecha_dia
+    description: "dimension de fecha para hacer las representaciones graficas"
+    columns:
+      - name: fecha_forecast
+        description: "fecha "
+
+      - name: id_date
+        tests:
+          - not_null
+          - unique
+        description: "id fecha"
+
+      - name: anio
+        description: "anio"
+
+      - name: mes
+        description: "mes"
+
+      - name: desc_mes
+        description: ""
+
+      - name: id_anio_mes
+        description: "id mes "
+
+      - name: dia_previo
+        description: ""
+
+      - name: anio_semana_dia
+        description: ""
+
+      - name: semana
+        description: ""
+
+
+
+
+
+
+
+  - name: dim_tiempo_mes
+    description: "para la dimension de budgets que es mejor representarla en mes "
+    columns:
+      - name: month_year
+        description: "meses del año "
+
+      - name: id_anio_mes
+        tests:
+          - not_null
+          - unique
+        description: "id "
+
+
+
+
+  - name: dim_users
+    description: "dimension de usuario"
+    columns:
+      - name: user_id
+        description: "id usuario md5 "
+
+      - name: nk_user_id
+        description: "clave natural usuaeio"
+
+      - name: first_name
+        description: "nombre "
+
+      - name: last_name
+        description: "apellido "
+
+      - name: phone_number
+        description: "numero de telefono"
+
+      - name: created_at_utc
+        description: "fecha creacion "
+
+      - name: updated_at_utc
+        description: "fecha de actualizacion de datos"
+
+      - name: email
+        description: "correo electronico"
+
+      - name: address_number
+        description: numero vivienda"
+
+      - name: address_name
+        description: "numero calle"
+
+      - name: zipcode
+        description: "codigo postaal "
+
+      - name: country
+        description: "pais "
+
+      - name: state
+        description: "estado"
+
+      - name: dato_usuario_no_valido_desde
+        description: "control snapshot usuario"
+
+      - name: dato_calle_no_valido_desde
+        description: "control snapshot direccion "
+
+
+
+  - name: fact_budgets
+    description: "tabla de hechos "
+    columns:
+      - name: id_budget
+        description: "md5 key "
+
+      - name: nk_id_budget
+        description: "clave natural "
+
+      - name: product_id
+        description: "id md5 prioducto "
+
+      - name: quantity
+        description: "cantidad comprada "
+
+      - name: id_anio_mes
+        tests:
+          - not_null
+        description: "id fecha para la representacion "
+
+      - name: order_date
+        description: "fecha de la compra  "
+
+
+
+
+
+
+  - name: fact_events
+    description: "tabla de hechos de events  "
+    columns:
+      - name: event_id
+        description: "id del evento "
+
+      - name: nk_event_id
+        description: "clave natural del evento"
+
+      - name: event_type
+        description: "tipo de evento "
+
+      - name: product_id
+        description: "id producto relacionado con el evento "
+
+      - name: order_id
+        description: "id del pedido si es checkout"
+
+      - name: session_id
+        description: "id de session "
+
+      - name: page_url
+        description: "url pagina "
+
+      - name: id_date
+        tests:
+          - not_null
+        description: "id fecha para representacion "
+
+      - name: created_at_utc
+        description: "fecha creacion "
+
+      - name: user_id
+        description: "id usuario "
+
+
+
+
+
+
+
+
+
+  - name: fact_orders
+    description: "tabala de hechos de pedidos "
+    columns:
+      - name: order_id
+        description: "clave primaria  "
+
+      - name: nk_order_id
+        description: "clave natural "
+
+      - name: user_id
+        description: " union con usuario"
+
+      - name: status
+        description: "estado pedido"
+
+      - name: order_total_cost_$
+        description: "precio total "
+
+      - name: order_cost_without_shipping_$
+        description: "precio sin envio"
+
+      - name: shipping_cost_$
+        description: "coste envio"
+
+      - name: product_id
+        description: "id producto "
+
+      - name: quantity_product_in_order
+        description: "cantidad producto por pedido"
+
+      - name: created_at_utc
+        description: "fecha de creacion pedido "
+
+      - name: estimated_delivery_at_utc
+        description: "fecha estimada de envio"
+
+      - name: delivered_at_utc
+        description: "fecha de envio"
+
+      - name: shipping_service
+        description: "servicio de mensajeria"
+
+      - name: promo_id
+        description: "id descuento"
+
+      - name: dato_no_valido_desde
+        description: "control snapshot"
+
+      - name: id_date
+        tests:
+          - not_null
+        description: "id de fecha para representacion "
+
+
+
+
+
+

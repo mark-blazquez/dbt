@@ -1,0 +1,241 @@
+version: 2
+
+models:
+  - name: stg_sql_server_dbo_addresses
+    description: "direcciones usuarios"
+    columns:
+      - name: address_id
+        description: "id direccion "
+
+      - name: address_number
+        tests:
+          - not_null
+        description: "seperada la direccion este campo es solo es el numero de la vivienda "
+
+      - name: address_name
+        tests:
+          - not_null
+        description: "seperada la direccion este campo es solo el nombre de la calle "
+
+      - name: zipcode
+        description: "codigo postal "
+
+      - name: country
+        description: "pais"
+
+      - name: state
+        description: "estado"
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""
+
+      - name: dato_no_valido_desde
+        description: "para controlar los snapshopts"
+
+
+  - name: stg_sql_server_dbo_events
+    description: "interacciones de los usurios silver"
+    columns:
+      - name: event_id
+        description: "id evento "
+
+      - name: event_type
+        description: "tipo de interaccion "
+
+      - name: product_id
+        description: "id de producto para la interaccion "
+
+      - name: order_id
+        description: "id dde pedido en caso de checkout"
+
+      - name: session_id
+        description: "id de session "
+
+      - name: page_url
+        description: "url de la pagina "
+
+      - name: created_at_utc
+        description: "cuando se realizo el evento "
+
+      - name: user_id
+        description: "id de usuario en el evento "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""    
+
+
+
+
+  - name: stg_sql_server_dbo_order_items
+    description: "silver de productos por cada pedido   "
+    columns:
+      - name: order_id
+        description: "id de pedido"
+
+      - name: product_id
+        description: "id de producto "
+
+      - name: quantity
+        description: "cantidad de producto comprada "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""   
+
+
+
+
+
+
+  - name: stg_sql_server_dbo_orders
+    description: "silver pedidos realizados "
+    columns:
+      - name: order_id
+        description: "id pedidos"
+
+      - name: address_id
+        description: "id direccion "
+
+      - name: user_id
+        description: "id usuario"
+
+      - name: status
+        description: "estado pedido"
+
+      - name: order_total_cost_$
+        description: "coste tortal "
+
+      - name: order_cost_without_shipping_$
+        description: "coste total sin envio"
+
+      - name: shipping_cost_$
+        description: "coste de envio"
+
+      - name: created_at_utc
+        description: "fecha creacion "
+
+      - name: estimated_delivery_at_utc
+        description: "fecha estimada envio"
+
+      - name: delivered_at_utc
+        description: "fecha de envio"
+
+      - name: tracking_id
+        description: "id envio "
+
+      - name: shipping_service
+        description: "servicio de reparto"
+
+      - name: promo_id
+        description: "id del descuento "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""
+
+      - name: dato_no_valido_desde
+        description: "controlar snapshots"
+
+
+
+
+
+
+  - name: stg_sql_server_dbo_products
+    description: "silver de los productos "
+    columns:
+      - name: product_id
+        description: "id producto "
+
+      - name: price
+        description: "precio"
+
+      - name: name
+        description: "nombre "
+
+      - name: inventory
+        description: "cantidad en almacen "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""
+
+      - name: dato_no_valido_desde
+        description: "controla los snapshot osea cuando hay fecha signiofica que a partir de ahi ese dato no es valido "
+
+
+
+
+
+  - name: stg_sql_server_dbo_promos
+    description: "silver promos "
+    columns:
+      - name: promo_id
+        description: "id promocion "
+
+      - name: discount_$
+        description: "descuento en dolares de la promocion "
+
+      - name: status
+        description: "estdao de la promocion "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""
+
+
+
+
+
+
+  - name: stg_sql_server_dbo_users
+    description: "slver de la tabla de usuarios "
+    columns:
+      - name: user_id
+        description: "id de usuario "
+
+      - name: first_name
+        description: "nombre  "
+
+      - name: last_name
+        description: "apellido "
+
+      - name: phone_number
+        test:
+          - positive_values
+        description: "numero de telefono modificado para que no tenga guiones para que sea un numero solo y sea mas facil trabajar con el "
+
+      - name: created_at_utc
+        description: "fecha de creacion "
+
+      - name: updated_at_utc
+        description: "fecha de modificacion "
+
+      - name: address_id
+        description: "id de la direccion para realacionarlo "
+
+      - name: email
+        description: "correoelectronico "
+
+      - name: _fivetran_deleted
+        description: ""
+
+      - name: _fivetran_synced
+        description: ""
+
+      - name: dato_no_valido_desde
+        description: "controla en snapshot "

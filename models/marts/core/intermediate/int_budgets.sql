@@ -1,6 +1,6 @@
 WITH stg_google_sheets AS (
     SELECT * 
-    FROM {{ ref('stg_google_sheets') }}
+    FROM {{ ref('stg_google_sheets_budgets') }}
     ),
 
 int_budgets AS (
