@@ -1,0 +1,183 @@
+version: 2
+
+models:
+  - name: int_budgets
+    description: "es una intermnedia para hacer el md5 para la tabla de hechos "
+    columns:
+      - name: id_budget
+        tests:
+          - not_null
+          - unique
+        description: "el nuevo identificador primeario y unico para esta tabla"
+
+      - name: nk_id_budget
+        description: "key natural esta viene del transaccional "
+
+      - name: product_id
+        description: "id de producto "
+
+      - name: quantity
+        description: "cantidad"
+
+      - name: order_date
+        description: "fecha de pedido "
+
+
+  - name: int_events
+    description: "para crear los md5 y que la de fact tenga menos carga"
+    columns:
+      - name: event_id
+        tests:
+          - not_null
+          - unique
+        description: "nuevo id md5"
+
+      - name: nk_event_id
+        description: "id natural "
+
+      - name: event_type
+        description: " tipo evento "
+
+      - name: product_id
+        description: "id producto con md5 y relacionarlo con la correspondiente"
+
+      - name: order_id
+        description: "id de pedido con md5 y relacionarlo con la correspondiente "
+
+      - name: session_id
+        description: "id de session con md5 y relacionarlo con la correspondiente"
+
+
+  - name: int_orders
+    description: "fusion de la tabla order y orders item "
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+        description: "id md5 de orders nuevo "
+
+      - name: nk_order_id
+        tests:
+          - not_null
+        description: "natural key de orders "
+
+      - name: user_id
+        tests:
+          - not_null
+        description: "id de usuario"
+
+      - name: status
+        description: "estado de pediod "
+
+      - name: order_total_cost_$
+        description: "precio total "
+
+      - name: order_cost_without_shipping_$
+        description: "precio sin envio"
+
+      - name: shipping_cost_$
+        description: "precio envio"
+
+      - name: product_id
+        tests:
+          - not_null
+        description: "id producto comprado en ese pedido "
+
+      - name: quantity_product_in_order
+        tests:
+          - not_null
+        description: "esto es la cantidad de producto concreto comprada en ese pedido "
+
+      - name: created_at_utc
+        description: "fecha de creacion "
+
+      - name: estimated_delivery_at_utc
+        description: "envio aproximado "
+
+      - name: delivered_at_utc
+        description: "fecha envio"
+
+      - name: shipping_service
+        description: "compañia de envio"
+
+      - name: promo_id
+        description: "id de la promocion de descuento "
+
+      - name: dato_no_valido_desde
+        description: "control de snapshot"
+
+
+
+  - name: int_users
+    description: "tabla para crear la dimension que contiene usuarios y su direccion "
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
+        description: "id md5 de usuario"
+
+      - name: nk_user_id
+        tests:
+          - not_null
+        description: "clave natural de ususario"
+
+      - name: first_name
+        description: "nombre"
+
+      - name: last_name
+        description: "apellido "
+
+      - name: phone_number
+        description: "numero de telefono"
+
+      - name: created_at_utc
+        description: "fecha de creacion "
+
+      - name: updated_at_utc
+        description: "fecha de actualizacion "
+
+      - name: email
+        description: "correo electronico"
+
+      - name: address_number
+        tests:
+          - not_null
+        description: "numero de vivienda"
+
+      - name: address_name
+        tests:
+          - not_null
+        description: "nombre de la calle "
+
+      - name: zipcode
+        tests:
+          - not_null
+        description: "codigo postal "
+
+      - name: country
+        tests:
+          - not_null
+        description: "pais"
+
+      - name: state
+        tests:
+          - not_null
+        description: "estado "
+
+      - name: dato_usuario_no_valido_desde
+        description: "snapshot que controla la actualizacion de la tabla usuario "
+
+      - name: dato_calle_no_valido_desde
+        description: "snapshot que controla la actualizacion de la tabla addres y que es necesario al hacer el join con users "
+
+
+
+
+
+
+
+
+
+

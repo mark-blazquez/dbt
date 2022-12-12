@@ -265,7 +265,7 @@ sources:
 
 
       - name: order_items
-        description: ""
+        description: "productos por cada pedido"
         columns:
           - name: order_id
             tests:

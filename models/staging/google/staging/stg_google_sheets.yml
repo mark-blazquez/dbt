@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_google_sheets_budgets
+    description: "silver budgets"
+    columns:
+      - name: id_budget
+        description: "clave primaria"
+
+      - name: product_id
+        description: "id productos que relaciona tabla"
+
+      - name: quantity
+        description: "cantidad adquirida"
+
+      - name: order_date
+        description: "fecha de pedido"
+
+      - name: date_load
+        description: "fivetran "
