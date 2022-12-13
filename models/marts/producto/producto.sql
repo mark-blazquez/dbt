@@ -15,10 +15,8 @@ datamart_producto AS (
         email,
         min(fact_events.CREATED_AT_UTC) as first_event_time_utc,
         max(fact_events.CREATED_AT_UTC) as last_event_time_utc,
-        DATEDIFF (minute,  min(fact_events.CREATED_AT_UTC) , max(fact_events.CREATED_AT_UTC) ) as session_lenght_minutes,
-        CASE
-        WHEN event_type='page_view' THEN count(event_type)
-        END as page_view
+        DATEDIFF (minute,  min(fact_events.CREATED_AT_UTC) , max(fact_events.CREATED_AT_UTC) ) as session_lenght_minutes
+        --as page_view
         --as ass_to_cart,
         --as checkout
         --as package_shipped
