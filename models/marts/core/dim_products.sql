@@ -15,7 +15,7 @@ dim_products AS (
         PRICE,
         NAME,
         INVENTORY,
-        _FIVETRAN_SYNCED ,
+        _FIVETRAN_SYNCED ,--para gestionar el incremental
         dato_no_valido_desde
     FROM stg_sql_server_dbo_products
     )

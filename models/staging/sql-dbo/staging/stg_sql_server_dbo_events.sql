@@ -19,7 +19,8 @@ events AS (
         END AS ORDER_ID ,       
         SESSION_ID ,
         PAGE_URL ,
-        DATE(CREATED_AT) AS CREATED_AT_utc,
+        --DATE(CREATED_AT) AS CREATED_AT_utc,
+        CREATED_AT AS CREATED_AT_utc,
         USER_ID ,
         _FIVETRAN_DELETED ,
         _FIVETRAN_SYNCED 

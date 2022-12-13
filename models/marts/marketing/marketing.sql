@@ -27,7 +27,7 @@ datamart_marketing AS (
         +sum(distinct(SHIPPING_COST_$)))
         -sum(distinct(ORDER_TOTAL_COST_$))
         as total_discount_usd,
-        sum(QUANTITY_PRODUCT_IN_ORDER) as total_quantity_product,
+        sum(QUANTITY_PRODUCT_IN_ORDER) as total_quantity_product
         --count(distinct(order_id))total_diferent_product
 
     FROM fact_orders join dim_users on fact_orders.user_id=dim_users.user_id
