@@ -9,13 +9,14 @@ fact_budgets AS (
 datamart_estimaciones AS (
     SELECT
         name,
-        (quantity*price) as estimacion_venta_$,
+        sum(quantity*price) as estimacion_venta_$,
         concat(month(order_date),'-',year(order_date)) as mes,
         id_anio_mes
        
 
     FROM fact_budgets join dim_products on fact_budgets.product_id=dim_products.product_id
-    order by order_date
+    group by name,mes,id_anio_mes
+    order by name
     )
 
 SELECT * FROM datamart_estimaciones
